@@ -133,7 +133,7 @@ export interface Baseline {
   locked: boolean;
   lockedAt: Date | null;
   lockedBy: string | null;
-  snapshotData: string;
+  snapshotData: string | any; // Can be string or object depending on how it's retrieved
   createdAt: Date;
   createdBy: string;
 }

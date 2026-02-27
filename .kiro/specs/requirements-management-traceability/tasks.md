@@ -98,8 +98,8 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 14: Impact Analysis Completeness**
     - **Validates: Requirements 10.1-10.3, 12.1-12.4**
 
-- [ ] 5. Implement audit trail service
-  - [ ] 5.1 Create AuditService class
+- [x] 5. Implement audit trail service
+  - [x] 5.1 Create AuditService class
     - Implement createAuditEntry method
     - Implement queryAuditTrail method with filtering
     - Ensure append-only behavior (no update/delete methods)
@@ -110,7 +110,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 17: Audit Entry Immutability**
     - **Validates: Requirements 14.1-14.6**
   
-  - [ ] 5.3 Implement database triggers for automatic audit logging
+  - [x] 5.3 Implement database triggers for automatic audit logging
     - Create PostgreSQL triggers on requirements table for INSERT, UPDATE, DELETE
     - Create triggers on traceability_links table
     - Triggers should call audit entry creation
@@ -124,7 +124,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement getBaseline method
     - _Requirements: 16.1-16.5, 17.1-17.4_
   
-  - [ ]* 6.2 Write property tests for baseline operations
+  - [x]* 6.2 Write property tests for baseline operations
     - **Property 19: Baseline Snapshot Accuracy**
     - **Property 20: Baseline Immutability After Locking**
     - **Property 21: Baseline Comparison Accuracy**

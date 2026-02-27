@@ -1,113 +1,151 @@
-# Database Migrations
+# Database Migrations Documentation
 
-This directory contains PostgreSQL database migrations for the RMT application using `node-pg-migrate`.
+This directory contains documentation and tests for all database migrations in the Requirements Management & Traceability (RMT) application.
 
-## Migration Commands
+## Migration Overview
 
-### Create a new migration
-```bash
-npm run db:migrate:create <migration-name>
-```
+### Core Tables (1709000000001)
+Creates the foundational tables for the application:
+- `requirements`: Core requirement data with hierarchical support
+- `projects`: Project organization
+- `users`: User management
+- `api_tokens`: API authentication
 
-Example:
-```bash
-npm run db:migrate:create add-users-table
-```
+**Documentation**: [1709000000001_create-core-tables.md](./1709000000001_create-core-tables.md)
 
-### Run all pending migrations
+### Traceability and Audit Tables (1709000000002)
+Creates tables for traceability links, audit trail, and electronic signatures:
+- `traceability_links`: Bidirectional links between requirements and external items
+- `audit_entries`: Immutable audit trail with tamper-proof constraints
+- `electronic_signatures`: Tamper-evident digital signatures for approvals
+
+**Documentation**: [1709000000002_create-traceability-audit-tables.md](./1709000000002_create-traceability-audit-tables.md)
+
+**Key Features**:
+- Immutability triggers prevent modification or deletion of audit entries
+- Immutability triggers prevent modification or deletion of electronic signatures
+- Comprehensive indexing for fast audit queries
+
+### Baseline and Workflow Tables (1709000000003)
+Creates tables for baseline management and collaboration:
+- `baselines`: Locked snapshots of requirements at specific points in time
+- `comments`: Threaded discussions on requirements
+- `attachments`: File attachments for requirements
+
+**Documentation**: [1709000000003_create-baseline-workflow-tables.md](./1709000000003_create-baseline-workflow-tables.md)
+
+### Retired Display IDs Table (1709000000004)
+Creates table to track retired requirement identifiers:
+- `retired_display_ids`: Ensures requirement IDs are never reused
+
+**Key Features**:
+- Automatic retirement on requirement deletion
+- Prevents ID reuse for compliance
+
+### Automatic Audit Triggers (1709000000005)
+Implements database triggers for automatic audit logging:
+- Requirement change triggers (INSERT, UPDATE, DELETE)
+- Traceability link change triggers (INSERT, DELETE)
+
+**Documentation**: [1709000000005_add-automatic-audit-triggers.md](./1709000000005_add-automatic-audit-triggers.md)
+
+**Key Features**:
+- Complete audit coverage without application code
+- Automatic actor attribution
+- Detailed change descriptions
+- Supports all requirement field changes
+
+## Testing
+
+Each migration includes comprehensive tests:
+
+### Unit Tests
+Located in `backend/src/repositories/*.test.ts`
+- Test individual repository methods
+- Verify CRUD operations
+- Test error handling
+
+### Integration Tests
+Located in `backend/src/repositories/*.integration.test.ts`
+- Test database interactions
+- Verify trigger behavior
+- Test transaction handling
+
+### Property-Based Tests
+Located in `backend/src/repositories/*.property.test.ts`
+- Test universal correctness properties
+- Verify invariants hold across all inputs
+- Use fast-check for property testing
+
+## Running Migrations
+
+### Apply All Pending Migrations
 ```bash
 npm run db:migrate
 ```
 
-### Rollback the last migration
+### Rollback Last Migration
 ```bash
 npm run db:migrate:down
 ```
 
-### Redo the last migration (down then up)
+### Rollback and Re-run Last Migration
 ```bash
 npm run db:migrate:redo
 ```
 
-### Reset database (rollback all migrations and re-run)
+### Reset Database (All Down, Then All Up)
 ```bash
 npm run db:reset
 ```
 
-## Migration File Structure
+## Migration Best Practices
 
-Each migration file exports two functions:
+1. **Never modify existing migrations** after they've been committed
+2. **Always provide both `up` and `down` functions** for rollback support
+3. **Test migrations thoroughly** before committing
+4. **Document all schema changes** in the migration docs
+5. **Use transactions** for multi-step migrations
+6. **Add indexes** for frequently queried columns
+7. **Consider performance** for large datasets
 
-```javascript
-exports.up = (pgm) => {
-  // Code to apply the migration
-  pgm.createTable('users', {
-    id: 'id',
-    email: { type: 'varchar(255)', notNull: true, unique: true },
-    created_at: {
-      type: 'timestamp',
-      notNull: true,
-      default: pgm.func('current_timestamp')
-    }
-  });
-};
+## Compliance Notes
 
-exports.down = (pgm) => {
-  // Code to rollback the migration
-  pgm.dropTable('users');
-};
-```
+The audit trail implementation satisfies regulatory requirements:
+- **FDA 21 CFR Part 11**: Electronic signatures and audit trails
+- **IEC 62304**: Medical device software lifecycle
+- **DO-178C**: Aerospace software safety
+- **ISO 26262**: Automotive functional safety
 
-## Best Practices
-
-1. **Always provide a down migration**: Every migration should be reversible
-2. **One logical change per migration**: Keep migrations focused and atomic
-3. **Test migrations**: Test both up and down migrations before committing
-4. **Never modify existing migrations**: Once a migration is committed and run in production, create a new migration to make changes
-5. **Use transactions**: Migrations run in transactions by default, but be aware of operations that can't be rolled back (like DROP DATABASE)
-6. **Add indexes**: Remember to add indexes for foreign keys and frequently queried columns
-7. **Document complex migrations**: Add comments for non-obvious changes
-
-## Migration Naming Convention
-
-Use descriptive names with hyphens:
-- `create-requirements-table`
-- `add-display-id-to-requirements`
-- `create-traceability-links-table`
-- `add-full-text-search-index`
-
-## Configuration
-
-Migration configuration is stored in `.migrate.json` in the backend root directory.
-
-## Database Connection
-
-Migrations use the `DATABASE_URL` environment variable from `.env` file:
-```
-DATABASE_URL=postgresql://rmt_user:rmt_password@localhost:5432/rmt_dev
-```
-
-## Migration Order
-
-Migrations are executed in chronological order based on their timestamp prefix. The system tracks which migrations have been applied in the `pgmigrations` table.
+Key compliance features:
+- Immutable audit entries (cannot be modified or deleted)
+- Complete change tracking (all modifications logged)
+- Actor attribution (who made each change)
+- Timestamp accuracy (automatic database timestamps)
+- Tamper-evident signatures (HMAC-SHA256 hashing)
+- 10-year retention (enforced by immutability)
 
 ## Troubleshooting
 
-### Migration fails midway
-If a migration fails, it will be rolled back automatically (if in a transaction). Fix the issue and run `npm run db:migrate` again.
+### Migration Fails
+1. Check PostgreSQL logs: `docker-compose logs postgres`
+2. Verify database connection: Check `DATABASE_URL` in `.env`
+3. Check for conflicting migrations: `SELECT * FROM pgmigrations;`
 
-### Need to rollback multiple migrations
-```bash
-npm run migrate down 3  # Rollback last 3 migrations
-```
+### Trigger Issues
+1. Verify triggers exist: `\dft` in psql
+2. Check trigger functions: `\df log_*` in psql
+3. Test manually: Insert/update/delete records and check `audit_entries`
 
-### Check migration status
-```bash
-npm run migrate -- --help
-```
+### Test Failures
+1. Ensure database is running: `docker-compose ps`
+2. Run migrations: `npm run db:migrate`
+3. Check for stale test data: Clean up test users/projects
+4. Run with verbose output: `npm test -- --verbose`
 
-### Force migration (use with caution)
-If you need to mark a migration as applied without running it:
-```bash
-npm run migrate mark <migration-name>
-```
+## Additional Resources
+
+- [Backend Documentation](../../docs/)
+- [Migration Guide](../../docs/MIGRATIONS.md)
+- [Product Requirements](../../../PRD-Requirements-Management-Traceability.md)
+- [Setup Instructions](../../../SETUP.md)
