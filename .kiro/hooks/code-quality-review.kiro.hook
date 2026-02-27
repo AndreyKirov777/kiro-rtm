@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Code Quality Review on Save",
+  "description": "Analyzes modified source code files for potential improvements including code smells, design patterns, best practices, readability, maintainability, and performance optimizations",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.jsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the modified code for potential improvements:\n1. Identify code smells and anti-patterns\n2. Suggest applicable design patterns\n3. Check adherence to TypeScript/JavaScript best practices\n4. Evaluate readability and maintainability\n5. Identify performance optimization opportunities\n6. Ensure consistency with project conventions (repository pattern, testing standards, etc.)\n\nProvide concise, actionable suggestions that maintain existing functionality. Focus on the most impactful improvements."
+  }
+}

@@ -64,7 +64,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Use connection pooling for PostgreSQL
     - _Requirements: 1.1-1.12_
   
-  - [x]* 3.4 Write property tests for requirement repository
+  - [x] 3.4 Write property tests for requirement repository
     - **Property 2: Internal ID Uniqueness**
     - **Property 3: Display ID Stability**
     - **Property 4: Display ID Non-Reuse**
@@ -75,17 +75,17 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement createLink, deleteLink, findBySource, findByTarget methods
     - _Requirements: 8.1-8.7_
   
-  - [x]* 3.6 Write property test for traceability bidirectionality
+  - [x] 3.6 Write property test for traceability bidirectionality
     - **Property 9: Traceability Link Bidirectionality**
     - **Validates: Requirements 8.1-8.7**
 
-- [ ] 4. Implement graph abstraction layer for traceability
-  - [~] 4.1 Create IGraphRepository interface
+- [x] 4. Implement graph abstraction layer for traceability
+  - [x] 4.1 Create IGraphRepository interface
     - Define interface with methods: findDownstreamRequirements, findUpstreamRequirements, detectCycles, findOrphanedRequirements, calculateImpactAnalysis, calculateCoverageStatus
     - Define supporting types: RequirementNode, Path, Cycle, ImpactTree, TraversalOptions
     - _Requirements: 9.1-9.2, 10.1-10.3, 12.1-12.4_
   
-  - [~] 4.2 Implement PostgreSQL graph repository with recursive CTEs
+  - [x] 4.2 Implement PostgreSQL graph repository with recursive CTEs
     - Implement PostgresGraphRepository class
     - Write recursive CTE queries for downstream traversal
     - Write recursive CTE queries for upstream traversal
@@ -93,31 +93,31 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement orphan detection queries
     - _Requirements: 9.1-9.2, 10.1-10.3, 12.1-12.4_
   
-  - [x]* 4.3 Write property tests for graph operations
+  - [x] 4.3 Write property tests for graph operations
     - **Property 11: Orphaned Requirement Detection**
     - **Property 14: Impact Analysis Completeness**
     - **Validates: Requirements 10.1-10.3, 12.1-12.4**
 
 - [ ] 5. Implement audit trail service
-  - [~] 5.1 Create AuditService class
+  - [ ] 5.1 Create AuditService class
     - Implement createAuditEntry method
     - Implement queryAuditTrail method with filtering
     - Ensure append-only behavior (no update/delete methods)
     - _Requirements: 14.1-14.7_
   
-  - [x]* 5.2 Write property tests for audit trail
+  - [x] 5.2 Write property tests for audit trail
     - **Property 16: Audit Trail Completeness**
     - **Property 17: Audit Entry Immutability**
     - **Validates: Requirements 14.1-14.6**
   
-  - [~] 5.3 Implement database triggers for automatic audit logging
+  - [ ] 5.3 Implement database triggers for automatic audit logging
     - Create PostgreSQL triggers on requirements table for INSERT, UPDATE, DELETE
     - Create triggers on traceability_links table
     - Triggers should call audit entry creation
     - _Requirements: 14.1-14.4_
 
 - [ ] 6. Implement baseline service
-  - [~] 6.1 Create BaselineService class
+  - [ ] 6.1 Create BaselineService class
     - Implement createBaseline method (snapshot all requirements to JSON)
     - Implement lockBaseline method with authorization check
     - Implement compareBaselines method with diff algorithm
@@ -131,13 +131,13 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 16.1-16.5, 17.1-17.4**
 
 - [ ] 7. Implement workflow and approval service
-  - [~] 7.1 Create WorkflowService class
+  - [ ] 7.1 Create WorkflowService class
     - Implement state transition validation
     - Implement approve, requestChanges, reject methods
     - Implement reviewer authorization checks
     - _Requirements: 19.1-19.4, 20.1-20.6_
   
-  - [~] 7.2 Implement electronic signature capture
+  - [ ] 7.2 Implement electronic signature capture
     - Create ElectronicSignatureService class
     - Implement signature creation with HMAC-SHA256 hash
     - Implement signature verification method
@@ -152,32 +152,32 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 22: Workflow State Transition Enforcement**
     - **Validates: Requirements 19.1-19.4, 20.1-20.6**
 
-- [~] 8. Checkpoint - Ensure all core services pass tests
+- [ ] 8. Checkpoint - Ensure all core services pass tests
   - Run all unit tests and property tests
   - Verify database schema is correctly created
   - Ensure all tests pass, ask the user if questions arise
 
 
 - [ ] 9. Implement REST API endpoints - Requirements CRUD
-  - [~] 9.1 Set up Express server with middleware
+  - [ ] 9.1 Set up Express server with middleware
     - Create Express app with JSON body parser
     - Add CORS middleware
     - Add error handling middleware
     - Add request logging middleware
     - _Requirements: 34.1-34.8_
   
-  - [~] 9.2 Implement authentication middleware
+  - [ ] 9.2 Implement authentication middleware
     - Create JWT authentication middleware
     - Create API token authentication middleware
     - Implement mock authentication for local development
     - _Requirements: 37.1-37.5_
   
-  - [~] 9.3 Implement authorization middleware
+  - [ ] 9.3 Implement authorization middleware
     - Create RBAC middleware with role checks
     - Define permission mappings for each role
     - _Requirements: 42.1-42.7_
   
-  - [~] 9.4 Implement requirement CRUD endpoints
+  - [ ] 9.4 Implement requirement CRUD endpoints
     - POST /api/v1/requirements (create)
     - GET /api/v1/requirements/:id (retrieve)
     - GET /api/v1/requirements (list with filtering)
@@ -190,7 +190,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 34.1-34.8, 36.1-36.4**
 
 - [ ] 10. Implement REST API endpoints - Query capabilities
-  - [~] 10.1 Implement query parameter parsing
+  - [ ] 10.1 Implement query parameter parsing
     - Parse pagination parameters (limit, offset, cursor)
     - Parse field selection (sparse fieldsets)
     - Parse resource expansion (include parameter)
@@ -198,7 +198,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Parse sorting (sort parameter)
     - _Requirements: 34.3, 24.1-24.8_
   
-  - [~] 10.2 Implement nested resource loading
+  - [ ] 10.2 Implement nested resource loading
     - Add include parameter support for links, comments, attachments, history, parent, children
     - Implement efficient batch loading to avoid N+1 queries
     - _Requirements: 34.1-34.8_
@@ -207,7 +207,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 32: REST API Nested Resource Loading**
     - **Validates: Requirements 34.1-34.8**
   
-  - [~] 10.4 Implement search and filter endpoints
+  - [ ] 10.4 Implement search and filter endpoints
     - GET /api/v1/search (full-text search)
     - Implement filter logic for status, type, priority, tags, assignee, custom fields, coverage status
     - Implement PostgreSQL full-text search with GIN indexes
@@ -219,14 +219,14 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 23.1-23.4, 24.1-24.8**
 
 - [ ] 11. Implement REST API endpoints - Traceability
-  - [~] 11.1 Implement traceability link endpoints
+  - [ ] 11.1 Implement traceability link endpoints
     - POST /api/v1/traceability-links (create link)
     - DELETE /api/v1/traceability-links/:id (delete link)
     - GET /api/v1/traceability-links (list links)
     - GET /api/v1/requirements/:id/links (get links for requirement)
     - _Requirements: 8.1-8.7, 34.6_
   
-  - [~] 11.2 Implement traceability matrix endpoint
+  - [ ] 11.2 Implement traceability matrix endpoint
     - GET /api/v1/projects/:id/traceability-matrix
     - Support format parameter (json, csv, pdf)
     - Implement matrix generation logic
@@ -236,17 +236,17 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 10: Traceability Matrix Completeness**
     - **Validates: Requirements 9.1-9.2**
   
-  - [~] 11.4 Implement impact analysis endpoint
+  - [ ] 11.4 Implement impact analysis endpoint
     - GET /api/v1/requirements/:id/impact
     - Use graph repository for traversal
     - _Requirements: 12.1-12.4_
   
-  - [~] 11.5 Implement orphaned requirements endpoint
+  - [ ] 11.5 Implement orphaned requirements endpoint
     - GET /api/v1/projects/:id/orphaned-requirements
     - Use graph repository for detection
     - _Requirements: 10.1-10.3_
   
-  - [~] 11.6 Implement broken link detection endpoint
+  - [ ] 11.6 Implement broken link detection endpoint
     - GET /api/v1/traceability-links/broken
     - Check external item status (mock for local dev)
     - _Requirements: 13.1-13.4_
@@ -256,7 +256,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 13.1-13.4**
 
 - [ ] 12. Implement REST API endpoints - Baselines and history
-  - [~] 12.1 Implement baseline endpoints
+  - [ ] 12.1 Implement baseline endpoints
     - POST /api/v1/baselines (create baseline)
     - PUT /api/v1/baselines/:id/lock (lock baseline)
     - GET /api/v1/baselines/:id (retrieve baseline)
@@ -264,7 +264,7 @@ The implementation follows a layered approach: database schema and core data mod
     - GET /api/v1/baselines (list baselines)
     - _Requirements: 16.1-16.5, 17.1-17.4_
   
-  - [~] 12.2 Implement revision history endpoints
+  - [ ] 12.2 Implement revision history endpoints
     - GET /api/v1/requirements/:id/history (get history)
     - POST /api/v1/requirements/:id/restore (restore version)
     - _Requirements: 15.1-15.3_
@@ -273,20 +273,20 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 18: Revision History Restoration**
     - **Validates: Requirements 15.1-15.3**
   
-  - [~] 12.4 Implement audit trail endpoint
+  - [ ] 12.4 Implement audit trail endpoint
     - GET /api/v1/audit-trail (query audit entries)
     - Support filtering by entity type, entity ID, actor, action, date range
     - _Requirements: 14.1-14.7_
 
 - [ ] 13. Implement REST API endpoints - Workflows and approvals
-  - [~] 13.1 Implement workflow action endpoints
+  - [ ] 13.1 Implement workflow action endpoints
     - POST /api/v1/requirements/:id/approve
     - POST /api/v1/requirements/:id/request-changes
     - POST /api/v1/requirements/:id/reject
     - Integrate with WorkflowService and ElectronicSignatureService
     - _Requirements: 20.1-20.6, 21.1-21.5_
   
-  - [~] 13.2 Implement comment endpoints
+  - [ ] 13.2 Implement comment endpoints
     - POST /api/v1/requirements/:id/comments
     - GET /api/v1/requirements/:id/comments
     - PUT /api/v1/comments/:id
@@ -297,7 +297,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 7: Comment Persistence and Ordering**
     - **Validates: Requirements 6.1-6.4**
   
-  - [~] 13.4 Implement attachment endpoints
+  - [ ] 13.4 Implement attachment endpoints
     - POST /api/v1/requirements/:id/attachments (upload with multipart)
     - GET /api/v1/requirements/:id/attachments (list)
     - GET /api/v1/attachments/:id/download (download file)
@@ -310,7 +310,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 5.1-5.3**
 
 - [ ] 14. Implement REST API endpoints - AI agent support
-  - [~] 14.1 Implement implementation status endpoint
+  - [ ] 14.1 Implement implementation status endpoint
     - GET /api/v1/requirements/:id/implementation-status
     - Return requirement details, approval status, linked items with states, coverage status
     - Optimize for 500ms response time
@@ -320,7 +320,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 34: Implementation Status Completeness**
     - **Validates: Requirements 39.1-39.3**
   
-  - [~] 14.3 Implement clarification request endpoint
+  - [ ] 14.3 Implement clarification request endpoint
     - POST /api/v1/requirements/:id/clarification-requests
     - Create comment with clarification flag
     - Assign to requirement owner
@@ -331,7 +331,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 35: Clarification Request Creation**
     - **Validates: Requirements 40.1-40.4**
   
-  - [~] 14.5 Implement batch operation endpoints
+  - [ ] 14.5 Implement batch operation endpoints
     - POST /api/v1/requirements/batch (bulk fetch)
     - POST /api/v1/traceability-links/batch (bulk create links)
     - PUT /api/v1/requirements/batch (bulk update)
@@ -343,7 +343,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 36: Batch Operation Atomicity**
     - **Validates: Requirements 41.1-41.4**
 
-- [~] 15. Checkpoint - Ensure all REST API endpoints work correctly
+- [ ] 15. Checkpoint - Ensure all REST API endpoints work correctly
   - Run integration tests for all endpoints
   - Test authentication and authorization
   - Verify error handling and response formats
@@ -351,7 +351,7 @@ The implementation follows a layered approach: database schema and core data mod
 
 
 - [ ] 16. Implement import services
-  - [~] 16.1 Create CSV import service
+  - [ ] 16.1 Create CSV import service
     - Implement CSV parser
     - Create field mapping interface logic
     - Implement validation (required fields, data types, enum values, unique display IDs)
@@ -362,7 +362,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 28: CSV Import Validation**
     - **Validates: Requirements 27.1-27.5**
   
-  - [~] 16.3 Create ReqIF import service
+  - [ ] 16.3 Create ReqIF import service
     - Implement ReqIF XML parser
     - Map ReqIF SpecObjects to Requirements
     - Map ReqIF SpecRelations to TraceabilityLinks
@@ -373,7 +373,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 29: ReqIF Import Structure Preservation**
     - **Validates: Requirements 28.1-28.5**
   
-  - [~] 16.5 Create Word import service
+  - [ ] 16.5 Create Word import service
     - Implement Word document parser using Open XML SDK or mammoth.js
     - Parse heading levels to create hierarchy
     - Parse tables for structured attributes
@@ -384,7 +384,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 30: Word Import Structure Preservation**
     - **Validates: Requirements 29.1-29.5**
   
-  - [~] 16.7 Implement import API endpoints
+  - [ ] 16.7 Implement import API endpoints
     - POST /api/v1/import/csv
     - POST /api/v1/import/reqif
     - POST /api/v1/import/word
@@ -393,12 +393,12 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 27.1-27.5, 28.1-28.5, 29.1-29.5_
 
 - [ ] 17. Implement export services
-  - [~] 17.1 Create CSV export service
+  - [ ] 17.1 Create CSV export service
     - Implement CSV generation with configurable fields
     - Include all requirement fields and custom fields
     - _Requirements: 30.1-30.3_
   
-  - [~] 17.2 Create JSON export service
+  - [ ] 17.2 Create JSON export service
     - Implement JSON serialization with stable schema
     - Include requirements and traceability links
     - Version the schema
@@ -408,7 +408,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 12: Export Format Round-Trip**
     - **Validates: Requirements 31.1-31.3, 33.1-33.3**
   
-  - [~] 17.4 Create PDF export service
+  - [ ] 17.4 Create PDF export service
     - Implement HTML template rendering
     - Use Puppeteer or similar for HTML to PDF conversion
     - Include project metadata in exports
@@ -418,14 +418,14 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 13: Export Content Completeness**
     - **Validates: Requirements 11.1-11.2, 11.4, 30.1-30.3, 32.1-32.3**
   
-  - [~] 17.6 Create ReqIF export service
+  - [ ] 17.6 Create ReqIF export service
     - Map Requirements to ReqIF SpecObjects
     - Map TraceabilityLinks to ReqIF SpecRelations
     - Preserve hierarchy in ReqIF SpecHierarchy
     - Generate ReqIF XML
     - _Requirements: 33.1-33.3_
   
-  - [~] 17.7 Implement export API endpoints
+  - [ ] 17.7 Implement export API endpoints
     - GET /api/v1/export/csv
     - GET /api/v1/export/json
     - GET /api/v1/export/pdf
@@ -434,25 +434,25 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 30.1-30.3, 31.1-31.3, 32.1-32.3, 33.1-33.3_
 
 - [ ] 18. Implement notification and webhook services
-  - [~] 18.1 Create NotificationService
+  - [ ] 18.1 Create NotificationService
     - Implement stakeholder identification logic
     - Implement console logging for local development (mock email)
     - Create notification preference handling
     - _Requirements: 22.1-22.4_
   
-  - [~] 18.2 Create WebhookService
+  - [ ] 18.2 Create WebhookService
     - Implement webhook subscription management
     - Implement webhook delivery with retry logic
     - Implement webhook logging
     - _Requirements: 38.1-38.5_
   
-  - [~] 18.3 Integrate notifications with requirement changes
+  - [ ] 18.3 Integrate notifications with requirement changes
     - Trigger notifications on status changes
     - Trigger webhooks on requirement changes
     - _Requirements: 22.1-22.4, 38.1-38.5_
 
 - [ ] 19. Implement additional backend features
-  - [~] 19.1 Implement hierarchical requirement operations
+  - [ ] 19.1 Implement hierarchical requirement operations
     - Create service methods for reordering requirements
     - Implement parent-child relationship validation (no cycles)
     - _Requirements: 3.1-3.3_
@@ -461,7 +461,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 5: Hierarchical Tree Structure Invariant**
     - **Validates: Requirements 3.1-3.2**
   
-  - [~] 19.3 Implement requirement templates
+  - [ ] 19.3 Implement requirement templates
     - Create template storage and retrieval
     - Implement template application logic
     - _Requirements: 7.1-7.3_
@@ -470,7 +470,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 8: Template Field Pre-Population**
     - **Validates: Requirements 7.1-7.3**
   
-  - [~] 19.5 Implement saved views
+  - [ ] 19.5 Implement saved views
     - Create saved view storage (filter and sort configurations)
     - Implement view sharing logic
     - _Requirements: 25.1-25.4_
@@ -479,7 +479,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 26: Saved View Persistence**
     - **Validates: Requirements 25.1-25.4**
   
-  - [~] 19.7 Implement project and user management endpoints
+  - [ ] 19.7 Implement project and user management endpoints
     - GET /api/v1/projects, POST /api/v1/projects, GET /api/v1/projects/:id, PUT /api/v1/projects/:id
     - GET /api/v1/users/me, PUT /api/v1/users/me, GET /api/v1/users
     - GET /api/v1/api-tokens, POST /api/v1/api-tokens, DELETE /api/v1/api-tokens/:id
@@ -513,7 +513,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Validates: Requirements 50.1-50.5, 51.1-51.5, 52.1-52.4**
 
 - [ ] 21. Implement compliance reporting
-  - [~] 21.1 Create ComplianceReportService
+  - [ ] 21.1 Create ComplianceReportService
     - Implement gap report generation (requirements without approval, without tests, with failing tests, changed since baseline)
     - Implement traceability matrix generation with coverage status
     - _Requirements: 53.1-53.5_
@@ -522,7 +522,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 39: Compliance Gap Report Accuracy**
     - **Validates: Requirements 53.1-53.5**
 
-- [~] 22. Checkpoint - Ensure all backend services are complete
+- [ ] 22. Checkpoint - Ensure all backend services are complete
   - Run all unit tests, integration tests, and property tests
   - Verify all API endpoints work correctly
   - Test import/export functionality
@@ -530,42 +530,42 @@ The implementation follows a layered approach: database schema and core data mod
 
 
 - [ ] 23. Set up React frontend project structure
-  - [~] 23.1 Create React app with TypeScript
+  - [ ] 23.1 Create React app with TypeScript
     - Initialize React project with Create React App or Vite
     - Configure TypeScript
     - Set up React Router for navigation
     - Configure Axios for API calls
     - _Requirements: All (frontend foundation)_
   
-  - [~] 23.2 Create shared UI components
+  - [ ] 23.2 Create shared UI components
     - Create Button, Input, Select, Textarea, Modal, Dropdown components
     - Create Table component with sorting and pagination
     - Create Loading spinner and error message components
     - Set up CSS/styling framework (Tailwind CSS or similar)
     - _Requirements: All (UI foundation)_
   
-  - [~] 23.3 Create authentication context and hooks
+  - [ ] 23.3 Create authentication context and hooks
     - Create AuthContext for managing user session
     - Create useAuth hook
     - Implement login/logout functionality
     - Store JWT token in localStorage
     - _Requirements: 37.1-37.5_
   
-  - [~] 23.4 Create API client service
+  - [ ] 23.4 Create API client service
     - Create axios instance with base URL and interceptors
     - Add authentication token to requests
     - Handle API errors globally
     - _Requirements: 34.1-34.8_
 
 - [ ] 24. Implement frontend - Requirement list and detail views
-  - [~] 24.1 Create requirement list page
+  - [ ] 24.1 Create requirement list page
     - Display requirements in a table with columns: Display ID, Title, Type, Status, Priority
     - Implement pagination
     - Implement sorting by columns
     - Add "Create Requirement" button
     - _Requirements: 1.1-1.12, 34.3_
   
-  - [~] 24.2 Create requirement detail page
+  - [ ] 24.2 Create requirement detail page
     - Display all requirement fields
     - Show requirement hierarchy (parent and children)
     - Display comments section
@@ -574,31 +574,31 @@ The implementation follows a layered approach: database schema and core data mod
     - Add "Edit" and "Delete" buttons
     - _Requirements: 1.1-1.12, 3.1-3.3, 6.1-6.4, 5.1-5.3, 8.1-8.7_
   
-  - [~] 24.3 Create requirement create/edit form
+  - [ ] 24.3 Create requirement create/edit form
     - Form fields for title, description (rich text editor), type, status, priority, tags, custom fields
     - Implement form validation
     - Submit to API on save
     - _Requirements: 1.1-1.12, 2.1-2.3, 4.1-4.3_
   
-  - [~] 24.4 Implement hierarchical tree view
+  - [ ] 24.4 Implement hierarchical tree view
     - Create tree component for requirement hierarchy
     - Support drag-and-drop reordering
     - Expand/collapse nodes
     - _Requirements: 3.1-3.3_
 
 - [ ] 25. Implement frontend - Search, filter, and saved views
-  - [~] 25.1 Create search bar component
+  - [ ] 25.1 Create search bar component
     - Full-text search input
     - Display search results with highlighting
     - _Requirements: 23.1-23.4_
   
-  - [~] 25.2 Create filter panel
+  - [ ] 25.2 Create filter panel
     - Filter controls for status, type, priority, tags, assignee, custom fields, coverage status
     - Support multiple filter combinations
     - Apply filters to requirement list
     - _Requirements: 24.1-24.8_
   
-  - [~] 25.3 Create saved views feature
+  - [ ] 25.3 Create saved views feature
     - "Save View" button to save current filters and sort
     - Display list of saved views
     - Load saved view on click
@@ -606,38 +606,38 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 25.1-25.4_
 
 - [ ] 26. Implement frontend - Traceability features
-  - [~] 26.1 Create traceability link creation UI
+  - [ ] 26.1 Create traceability link creation UI
     - "Add Link" button on requirement detail page
     - Modal to select target requirement or external item
     - Select link type dropdown
     - _Requirements: 8.1-8.7_
   
-  - [~] 26.2 Create traceability matrix view
+  - [ ] 26.2 Create traceability matrix view
     - Display matrix with requirements as rows and test cases as columns
     - Color-code cells by coverage status (Passed, Failed, Not Run, No Test)
     - Support filtering and export
     - _Requirements: 9.1-9.2_
   
-  - [~] 26.3 Create dependency graph visualization
+  - [ ] 26.3 Create dependency graph visualization
     - Use D3.js or similar library for graph rendering
     - Display requirements as nodes and links as edges
     - Support zoom, pan, and node selection
     - Click node to navigate to requirement detail
     - _Requirements: 26.1-26.4_
   
-  - [~] 26.4 Create impact analysis view
+  - [ ] 26.4 Create impact analysis view
     - Display impact tree when requirement is selected
     - Show all downstream requirements and external items
     - Highlight affected items
     - _Requirements: 12.1-12.4_
   
-  - [~] 26.5 Create orphaned requirements view
+  - [ ] 26.5 Create orphaned requirements view
     - Display list of orphaned requirements
     - Support filtering and sorting
     - _Requirements: 10.1-10.3_
 
 - [ ] 27. Implement frontend - Comments and attachments
-  - [~] 27.1 Create comment component
+  - [ ] 27.1 Create comment component
     - Display comments in chronological order
     - Support threaded replies
     - Add comment form
@@ -645,53 +645,53 @@ The implementation follows a layered approach: database schema and core data mod
     - Resolve comments
     - _Requirements: 6.1-6.4, 40.1-40.4_
   
-  - [~] 27.2 Create attachment upload component
+  - [ ] 27.2 Create attachment upload component
     - File upload button with drag-and-drop support
     - Display list of attachments with download links
     - Delete attachment button
     - _Requirements: 5.1-5.3_
 
 - [ ] 28. Implement frontend - Baselines and history
-  - [~] 28.1 Create baseline management page
+  - [ ] 28.1 Create baseline management page
     - Display list of baselines
     - "Create Baseline" button with name and description form
     - "Lock Baseline" button for unlocked baselines
     - _Requirements: 16.1-16.5_
   
-  - [~] 28.2 Create baseline comparison view
+  - [ ] 28.2 Create baseline comparison view
     - Select two baselines or baseline vs current
     - Display diff view with added, modified, deleted requirements
     - Highlight field-level changes
     - _Requirements: 17.1-17.4_
   
-  - [~] 28.3 Create revision history view
+  - [ ] 28.3 Create revision history view
     - Display all versions of a requirement
     - Show changes between versions
     - "Restore" button to revert to previous version
     - _Requirements: 15.1-15.3_
 
 - [ ] 29. Implement frontend - Workflows and approvals
-  - [~] 29.1 Create approval workflow UI
+  - [ ] 29.1 Create approval workflow UI
     - Display current workflow state on requirement detail page
     - "Approve", "Request Changes", "Reject" buttons based on user role
     - Electronic signature capture modal
     - _Requirements: 19.1-19.4, 20.1-20.6, 21.1-21.5_
   
-  - [~] 29.2 Create workflow configuration page (admin only)
+  - [ ] 29.2 Create workflow configuration page (admin only)
     - Define workflow states
     - Define transitions between states
     - Assign reviewers to states
     - _Requirements: 19.1-19.4_
 
 - [ ] 30. Implement frontend - Import/Export
-  - [~] 30.1 Create import page
+  - [ ] 30.1 Create import page
     - File upload for CSV, ReqIF, Word
     - Field mapping interface for CSV
     - Display validation errors
     - Show import progress and results
     - _Requirements: 27.1-27.5, 28.1-28.5, 29.1-29.5_
   
-  - [~] 30.2 Create export functionality
+  - [ ] 30.2 Create export functionality
     - "Export" button on requirement list page
     - Select export format (CSV, JSON, PDF, ReqIF)
     - Select fields to include
@@ -699,47 +699,47 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 30.1-30.3, 31.1-31.3, 32.1-32.3, 33.1-33.3, 11.1-11.2, 11.4_
 
 - [ ] 31. Implement frontend - Admin and settings
-  - [~] 31.1 Create project management page
+  - [ ] 31.1 Create project management page
     - List projects
     - Create/edit project form
     - Configure custom fields per project
     - _Requirements: 2.1-2.3_
   
-  - [~] 31.2 Create user management page (admin only)
+  - [ ] 31.2 Create user management page (admin only)
     - List users
     - Assign roles
     - _Requirements: 42.1-42.7_
   
-  - [~] 31.3 Create API token management page
+  - [ ] 31.3 Create API token management page
     - List user's API tokens
     - Create new token with scopes and expiration
     - Revoke token
     - Display token value only once on creation
     - _Requirements: 37.1-37.5_
   
-  - [~] 31.4 Create notification preferences page
+  - [ ] 31.4 Create notification preferences page
     - Configure email notification preferences
     - Configure webhook subscriptions
     - _Requirements: 22.1-22.4, 38.1-38.5_
 
 - [ ] 32. Implement frontend - Requirement templates
-  - [~] 32.1 Create template management page
+  - [ ] 32.1 Create template management page
     - List requirement templates
     - Create/edit template form
     - _Requirements: 7.1-7.3_
   
-  - [~] 32.2 Add "Create from Template" option
+  - [ ] 32.2 Add "Create from Template" option
     - Template selection dropdown on requirement creation
     - Pre-populate fields from selected template
     - _Requirements: 7.1-7.3_
 
 - [ ] 33. Implement frontend - Audit trail and compliance
-  - [~] 33.1 Create audit trail page
+  - [ ] 33.1 Create audit trail page
     - Display audit entries with filtering
     - Filter by entity type, entity ID, actor, action, date range
     - _Requirements: 14.1-14.7_
   
-  - [~] 33.2 Create compliance gap report page
+  - [ ] 33.2 Create compliance gap report page
     - Display requirements without approval
     - Display requirements without test coverage
     - Display requirements with failing tests
@@ -747,29 +747,29 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 53.1-53.5_
 
 - [ ] 34. Polish frontend UI/UX
-  - [~] 34.1 Add loading states and error handling
+  - [ ] 34.1 Add loading states and error handling
     - Show loading spinners during API calls
     - Display user-friendly error messages
     - Implement retry logic for failed requests
     - _Requirements: All_
   
-  - [~] 34.2 Implement responsive design
+  - [ ] 34.2 Implement responsive design
     - Ensure UI works on desktop and tablet
     - Adjust layouts for different screen sizes
     - _Requirements: All_
   
-  - [~] 34.3 Add keyboard shortcuts and accessibility
+  - [ ] 34.3 Add keyboard shortcuts and accessibility
     - Implement common keyboard shortcuts (Ctrl+S to save, etc.)
     - Ensure ARIA labels and roles are correct
     - Test with screen readers
     - _Requirements: All_
   
-  - [~] 34.4 Add user feedback mechanisms
+  - [ ] 34.4 Add user feedback mechanisms
     - Toast notifications for success/error messages
     - Confirmation dialogs for destructive actions
     - _Requirements: All_
 
-- [~] 35. Checkpoint - Ensure frontend is fully functional
+- [ ] 35. Checkpoint - Ensure frontend is fully functional
   - Test all UI components and pages
   - Verify integration with backend API
   - Test user workflows end-to-end
@@ -777,17 +777,17 @@ The implementation follows a layered approach: database schema and core data mod
 
 
 - [ ] 36. Create Docker Compose configuration
-  - [~] 36.1 Create Dockerfile for backend
+  - [ ] 36.1 Create Dockerfile for backend
     - Multi-stage build for production
     - Development Dockerfile with hot reload
     - _Requirements: All (deployment)_
   
-  - [~] 36.2 Create Dockerfile for frontend
+  - [ ] 36.2 Create Dockerfile for frontend
     - Multi-stage build for production
     - Development Dockerfile with hot reload
     - _Requirements: All (deployment)_
   
-  - [~] 36.3 Create docker-compose.yml
+  - [ ] 36.3 Create docker-compose.yml
     - PostgreSQL service with health check
     - Backend API service with volume mounts for development
     - Frontend service with volume mounts for development
@@ -795,26 +795,26 @@ The implementation follows a layered approach: database schema and core data mod
     - Set up networking between services
     - _Requirements: All (deployment)_
   
-  - [~] 36.4 Create database initialization scripts
+  - [ ] 36.4 Create database initialization scripts
     - Create seed data script with sample requirements, links, baselines
     - Create migration runner script
     - _Requirements: All (deployment)_
 
 - [ ] 37. Write comprehensive documentation
-  - [~] 37.1 Create README.md
+  - [ ] 37.1 Create README.md
     - Quick start guide with docker-compose up
     - Prerequisites and installation instructions
     - Environment variable documentation
     - Troubleshooting section
     - _Requirements: All (documentation)_
   
-  - [~] 37.2 Create API documentation
+  - [ ] 37.2 Create API documentation
     - Generate OpenAPI 3.x specification
     - Document all endpoints with examples
     - Document authentication and authorization
     - _Requirements: 34.1-34.8, 36.1-36.4_
   
-  - [~] 37.3 Create developer guide
+  - [ ] 37.3 Create developer guide
     - Architecture overview
     - Database schema documentation
     - Service layer documentation
@@ -822,19 +822,19 @@ The implementation follows a layered approach: database schema and core data mod
     - Testing guide
     - _Requirements: All (documentation)_
   
-  - [~] 37.4 Create user guide
+  - [ ] 37.4 Create user guide
     - Feature walkthroughs with screenshots
     - Common workflows
     - Best practices
     - _Requirements: All (documentation)_
 
 - [ ] 38. Implement end-to-end tests
-  - [~] 38.1 Set up Playwright for E2E testing
+  - [ ] 38.1 Set up Playwright for E2E testing
     - Configure Playwright
     - Create test fixtures and helpers
     - _Requirements: All (testing)_
   
-  - [~] 38.2 Write E2E tests for core workflows
+  - [ ] 38.2 Write E2E tests for core workflows
     - Test: Create requirement → add link → generate matrix
     - Test: Import CSV → validate → create requirements
     - Test: Create baseline → lock → compare with current
@@ -848,19 +848,19 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 23.1-23.4, 24.1-24.8, 25.1-25.4_
 
 - [ ] 39. Implement performance optimizations
-  - [~] 39.1 Add database query optimization
+  - [ ] 39.1 Add database query optimization
     - Review and optimize slow queries
     - Add missing indexes
     - Implement query result caching with in-memory Map
     - _Requirements: All (performance)_
   
-  - [~] 39.2 Add API response caching
+  - [ ] 39.2 Add API response caching
     - Implement ETag headers for conditional requests
     - Cache frequently accessed data
     - Implement cache invalidation on writes
     - _Requirements: All (performance)_
   
-  - [~] 39.3 Optimize frontend performance
+  - [ ] 39.3 Optimize frontend performance
     - Implement React.memo for expensive components
     - Use virtual scrolling for large lists
     - Lazy load routes and components
@@ -874,19 +874,19 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: 11.3, 39.3_
 
 - [ ] 40. Implement security hardening
-  - [~] 40.1 Add security headers
+  - [ ] 40.1 Add security headers
     - Implement Helmet.js for Express
     - Add CORS configuration
     - Add rate limiting middleware
     - _Requirements: All (security)_
   
-  - [~] 40.2 Implement input validation and sanitization
+  - [ ] 40.2 Implement input validation and sanitization
     - Validate all API inputs
     - Sanitize user-provided HTML in rich text fields
     - Prevent SQL injection with parameterized queries
     - _Requirements: All (security)_
   
-  - [~] 40.3 Add CSRF protection
+  - [ ] 40.3 Add CSRF protection
     - Implement CSRF tokens for state-changing operations
     - _Requirements: All (security)_
   
@@ -898,34 +898,34 @@ The implementation follows a layered approach: database schema and core data mod
     - _Requirements: All (security)_
 
 - [ ] 41. Final integration and testing
-  - [~] 41.1 Run all unit tests
+  - [ ] 41.1 Run all unit tests
     - Ensure 80%+ code coverage
     - Fix any failing tests
     - _Requirements: All (testing)_
   
-  - [~] 41.2 Run all property-based tests
+  - [ ] 41.2 Run all property-based tests
     - Verify all 39 correctness properties pass
     - Run with minimum 100 iterations per property
     - _Requirements: All (testing)_
   
-  - [~] 41.3 Run all integration tests
+  - [ ] 41.3 Run all integration tests
     - Test all API endpoints
     - Test database operations
     - Test external integrations (mocked)
     - _Requirements: All (testing)_
   
-  - [~] 41.4 Run all E2E tests
+  - [ ] 41.4 Run all E2E tests
     - Test complete user workflows
     - Test across different browsers
     - _Requirements: All (testing)_
   
-  - [~] 41.5 Perform manual testing
+  - [ ] 41.5 Perform manual testing
     - Test UI/UX flows
     - Test edge cases
     - Test error handling
     - _Requirements: All (testing)_
 
-- [~] 42. Final checkpoint - System ready for use
+- [ ] 42. Final checkpoint - System ready for use
   - Verify all features are implemented and working
   - Ensure all tests pass
   - Verify documentation is complete
