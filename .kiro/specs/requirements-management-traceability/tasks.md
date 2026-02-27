@@ -32,14 +32,14 @@ The implementation follows a layered approach: database schema and core data mod
     - Add indexes on foreign keys and frequently queried fields
     - _Requirements: 1.1-1.12, 2.1-2.3, 4.1-4.3_
   
-  - [~] 2.3 Create traceability and audit tables
+  - [x] 2.3 Create traceability and audit tables
     - Create traceability_links table with source_id, target_id, link_type, external system fields
     - Create audit_entries table (append-only with immutability constraints)
     - Create electronic_signatures table
     - Add indexes for traceability queries
     - _Requirements: 8.1-8.7, 14.1-14.7, 21.1-21.5_
   
-  - [~] 2.4 Create baseline and workflow tables
+  - [x] 2.4 Create baseline and workflow tables
     - Create baselines table with snapshot_data JSON field
     - Create comments table with threading support
     - Create attachments table
@@ -48,7 +48,7 @@ The implementation follows a layered approach: database schema and core data mod
 
 
 - [ ] 3. Implement core data models and repositories
-  - [~] 3.1 Create TypeScript interfaces for all data models
+  - [x] 3.1 Create TypeScript interfaces for all data models
     - Define Requirement, TraceabilityLink, Baseline, AuditEntry, ElectronicSignature, Comment, Attachment, Project, User, ApiToken interfaces
     - Define enum types (RequirementType, RequirementStatus, Priority, LinkType, CoverageStatus)
     - _Requirements: 1.1-1.12, 8.1-8.7_
@@ -57,7 +57,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 1: Requirement Data Round-Trip**
     - **Validates: Requirements 1.3-1.12, 2.1-2.3, 4.1-4.3**
   
-  - [~] 3.3 Implement requirement repository
+  - [x] 3.3 Implement requirement repository
     - Create RequirementRepository class with CRUD methods
     - Implement create, findById, findByProject, update, delete methods
     - Implement version increment logic on updates
@@ -70,7 +70,7 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 4: Display ID Non-Reuse**
     - **Validates: Requirements 1.1, 1.2, 3.3, 18.1-18.3**
   
-  - [~] 3.5 Implement traceability link repository
+  - [x] 3.5 Implement traceability link repository
     - Create TraceabilityLinkRepository class
     - Implement createLink, deleteLink, findBySource, findByTarget methods
     - _Requirements: 8.1-8.7_
