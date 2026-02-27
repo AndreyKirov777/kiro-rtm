@@ -53,7 +53,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Define enum types (RequirementType, RequirementStatus, Priority, LinkType, CoverageStatus)
     - _Requirements: 1.1-1.12, 8.1-8.7_
   
-  - [ ]* 3.2 Write property test for data model round-trip
+  - [x] 3.2 Write property test for data model round-trip
     - **Property 1: Requirement Data Round-Trip**
     - **Validates: Requirements 1.3-1.12, 2.1-2.3, 4.1-4.3**
   
@@ -64,7 +64,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Use connection pooling for PostgreSQL
     - _Requirements: 1.1-1.12_
   
-  - [ ]* 3.4 Write property tests for requirement repository
+  - [x]* 3.4 Write property tests for requirement repository
     - **Property 2: Internal ID Uniqueness**
     - **Property 3: Display ID Stability**
     - **Property 4: Display ID Non-Reuse**
@@ -75,7 +75,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement createLink, deleteLink, findBySource, findByTarget methods
     - _Requirements: 8.1-8.7_
   
-  - [ ]* 3.6 Write property test for traceability bidirectionality
+  - [x]* 3.6 Write property test for traceability bidirectionality
     - **Property 9: Traceability Link Bidirectionality**
     - **Validates: Requirements 8.1-8.7**
 
@@ -93,7 +93,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement orphan detection queries
     - _Requirements: 9.1-9.2, 10.1-10.3, 12.1-12.4_
   
-  - [ ]* 4.3 Write property tests for graph operations
+  - [x]* 4.3 Write property tests for graph operations
     - **Property 11: Orphaned Requirement Detection**
     - **Property 14: Impact Analysis Completeness**
     - **Validates: Requirements 10.1-10.3, 12.1-12.4**
@@ -105,7 +105,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Ensure append-only behavior (no update/delete methods)
     - _Requirements: 14.1-14.7_
   
-  - [ ]* 5.2 Write property tests for audit trail
+  - [x]* 5.2 Write property tests for audit trail
     - **Property 16: Audit Trail Completeness**
     - **Property 17: Audit Entry Immutability**
     - **Validates: Requirements 14.1-14.6**
