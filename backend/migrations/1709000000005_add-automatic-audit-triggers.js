@@ -78,7 +78,7 @@ exports.up = (pgm) => {
           new_val := jsonb_build_object('type', NEW.type);
         ELSIF OLD.priority != NEW.priority THEN
           action_val := 'update_priority';
-          change_desc := 'Priority changed from ' || OLD.priority || ' to ' || NEW.priority;
+          change_desc := format('Priority changed from %s to %s', OLD.priority, NEW.priority);
           prev_val := jsonb_build_object('priority', OLD.priority);
           new_val := jsonb_build_object('priority', NEW.priority);
         ELSIF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
@@ -106,7 +106,7 @@ exports.up = (pgm) => {
         actor_id_val := OLD.updated_by;
         actor_type_val := 'user';
         action_val := 'delete_requirement';
-        change_desc := 'Deleted requirement: ' || OLD.title;
+        change_desc := format('Deleted requirement: %s', OLD.title);
         prev_val := jsonb_build_object(
           'displayId', OLD.display_id,
           'title', OLD.title,
@@ -176,20 +176,22 @@ exports.up = (pgm) => {
         actor_type_val := 'user';
         action_val := 'create_link';
         
-        -- Get display IDs for better audit messages
+        -- Get display IDs for better audit messages (adds query overhead)
         SELECT display_id INTO source_display_id 
         FROM requirements WHERE id = NEW.source_id;
         
         IF NEW.target_type = 'requirement' THEN
           SELECT display_id INTO target_display_id 
           FROM requirements WHERE id = NEW.target_id::uuid;
-          change_desc := 'Created ' || NEW.link_type || ' link from ' || 
-                        COALESCE(source_display_id, NEW.source_id::text) || ' to ' || 
-                        COALESCE(target_display_id, NEW.target_id);
+          change_desc := format('Created %s link from %s to %s',
+                        NEW.link_type,
+                        COALESCE(source_display_id, NEW.source_id::text),
+                        COALESCE(target_display_id, NEW.target_id));
         ELSE
-          change_desc := 'Created ' || NEW.link_type || ' link from ' || 
-                        COALESCE(source_display_id, NEW.source_id::text) || ' to external item ' || 
-                        NEW.target_id;
+          change_desc := format('Created %s link from %s to external item %s',
+                        NEW.link_type,
+                        COALESCE(source_display_id, NEW.source_id::text),
+                        NEW.target_id);
         END IF;
         
         prev_val := NULL;

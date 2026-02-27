@@ -124,7 +124,7 @@ The implementation follows a layered approach: database schema and core data mod
     - Implement getBaseline method
     - _Requirements: 16.1-16.5, 17.1-17.4_
   
-  - [x]* 6.2 Write property tests for baseline operations
+  - [x] 6.2 Write property tests for baseline operations
     - **Property 19: Baseline Snapshot Accuracy**
     - **Property 20: Baseline Immutability After Locking**
     - **Property 21: Baseline Comparison Accuracy**
