@@ -48,16 +48,12 @@ export class WordImportService {
     
     // Simple HTML parsing - in production, use a proper HTML parser like cheerio
     const headingRegex = /<h(\d)>(.*?)<\/h\d>/g;
-    const paragraphRegex = /<p>(.*?)<\/p>/g;
-    
+
     let match;
-    let currentRequirement: ParsedRequirement | null = null;
-    let descriptionParts: string[] = [];
 
     // Extract headings
     const headings: Array<{ level: number; title: string; index: number }> = [];
-    let index = 0;
-    
+
     while ((match = headingRegex.exec(html)) !== null) {
       const level = parseInt(match[1]);
       const title = this.stripHtmlTags(match[2]);
@@ -169,7 +165,7 @@ export class WordImportService {
     let columnMapping: Record<string, number> = {};
 
     for (const line of lines) {
-      const cells = line.split('|').map(c => c.trim()).filter(c => c);
+      const cells = line.split('|').map((c: string) => c.trim()).filter((c: string) => c);
       
       if (cells.length === 0) continue;
 

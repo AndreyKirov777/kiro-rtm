@@ -117,11 +117,13 @@ describe('Property 19: Baseline Snapshot Accuracy', () => {
             // Setup: Create project
             await createTestProject(projectId, userId);
 
-            // Setup: Create requirements
+            // Setup: Create requirements (ensure unique displayId per project)
             const createdRequirements: Requirement[] = [];
-            for (const reqData of requirementsData) {
+            for (let i = 0; i < requirementsData.length; i++) {
+              const reqData = requirementsData[i];
               const req = await requirementRepository.create({
                 ...reqData,
+                displayId: `${reqData.displayId}-${Date.now()}-${i}`,
                 projectId,
                 parentId: null,
                 createdBy: userId,
@@ -189,6 +191,7 @@ describe('Property 19: Baseline Snapshot Accuracy', () => {
         requirementDataArb,
         fc.string({ minLength: 5, maxLength: 100 }),
         async (projectId, userId, baselineName, reqData, newTitle) => {
+          fc.pre(newTitle !== reqData.title);
           try {
             // Setup: Create project
             await createTestProject(projectId, userId);

@@ -3,6 +3,9 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   testMatch: ['**/*.test.ts'],
+  moduleNameMapper: {
+    '^mammoth$': '<rootDir>/src/__mocks__/mammoth.js',
+  },
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.test.ts',

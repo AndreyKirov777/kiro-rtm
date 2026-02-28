@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import SearchBar from './SearchBar';
 import { Requirement } from '../types';
 
@@ -55,7 +55,8 @@ describe('SearchBar', () => {
     expect(screen.getByPlaceholderText('Search requirements...')).toBeInTheDocument();
   });
 
-  it('filters requirements based on search query', () => {
+  it('filters requirements based on search query', async () => {
+    jest.useFakeTimers();
     const mockOnSearchResults = jest.fn();
     render(
       <SearchBar
@@ -66,15 +67,18 @@ describe('SearchBar', () => {
 
     const searchInput = screen.getByPlaceholderText('Search requirements...');
     fireEvent.change(searchInput, { target: { value: 'encryption' } });
+    act(() => { jest.advanceTimersByTime(350); });
 
-    // Should be called with filtered results
-    expect(mockOnSearchResults).toHaveBeenCalled();
-    const lastCall = mockOnSearchResults.mock.calls[mockOnSearchResults.mock.calls.length - 1];
-    expect(lastCall[0]).toHaveLength(1);
-    expect(lastCall[0][0].id).toBe('req-2');
+    await waitFor(() => {
+      const lastCall = mockOnSearchResults.mock.calls[mockOnSearchResults.mock.calls.length - 1];
+      expect(lastCall[0]).toHaveLength(1);
+      expect(lastCall[0][0].id).toBe('req-2');
+    });
+    jest.useRealTimers();
   });
 
-  it('shows all requirements when search is cleared', () => {
+  it('shows all requirements when search is cleared', async () => {
+    jest.useFakeTimers();
     const mockOnSearchResults = jest.fn();
     render(
       <SearchBar
@@ -85,13 +89,19 @@ describe('SearchBar', () => {
 
     const searchInput = screen.getByPlaceholderText('Search requirements...');
     fireEvent.change(searchInput, { target: { value: 'encryption' } });
+    act(() => { jest.advanceTimersByTime(350); });
     fireEvent.change(searchInput, { target: { value: '' } });
+    act(() => { jest.advanceTimersByTime(350); });
 
-    const lastCall = mockOnSearchResults.mock.calls[mockOnSearchResults.mock.calls.length - 1];
-    expect(lastCall[0]).toHaveLength(2);
+    await waitFor(() => {
+      const lastCall = mockOnSearchResults.mock.calls[mockOnSearchResults.mock.calls.length - 1];
+      expect(lastCall[0]).toHaveLength(2);
+    });
+    jest.useRealTimers();
   });
 
-  it('displays result count', () => {
+  it('displays result count', async () => {
+    jest.useFakeTimers();
     const mockOnSearchResults = jest.fn();
     render(
       <SearchBar
@@ -102,7 +112,11 @@ describe('SearchBar', () => {
 
     const searchInput = screen.getByPlaceholderText('Search requirements...');
     fireEvent.change(searchInput, { target: { value: 'authentication' } });
+    act(() => { jest.advanceTimersByTime(350); });
 
-    expect(screen.getByText(/Found 1 result/)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Found 1 result/)).toBeInTheDocument();
+    });
+    jest.useRealTimers();
   });
 });

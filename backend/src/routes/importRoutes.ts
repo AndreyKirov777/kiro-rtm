@@ -60,14 +60,14 @@ router.post('/csv', upload.single('file'), async (req: Request, res: Response) =
     // Start async processing
     processCSVImport(jobId, req.file.buffer, projectId, fieldMapping);
 
-    res.status(202).json({
+    return res.status(202).json({
       jobId,
       status: 'pending',
       message: 'Import job created successfully',
     });
   } catch (error) {
     console.error('CSV import error:', error);
-    res.status(500).json({ error: 'Failed to process CSV import' });
+    return res.status(500).json({ error: 'Failed to process CSV import' });
   }
 });
 
@@ -99,14 +99,14 @@ router.post('/reqif', upload.single('file'), async (req: Request, res: Response)
     // Start async processing
     processReqIFImport(jobId, req.file.buffer, projectId);
 
-    res.status(202).json({
+    return res.status(202).json({
       jobId,
       status: 'pending',
       message: 'Import job created successfully',
     });
   } catch (error) {
     console.error('ReqIF import error:', error);
-    res.status(500).json({ error: 'Failed to process ReqIF import' });
+    return res.status(500).json({ error: 'Failed to process ReqIF import' });
   }
 });
 
@@ -139,14 +139,14 @@ router.post('/word', upload.single('file'), async (req: Request, res: Response) 
     // Start async processing
     processWordImport(jobId, req.file.buffer, projectId, parseMode);
 
-    res.status(202).json({
+    return res.status(202).json({
       jobId,
       status: 'pending',
       message: 'Import job created successfully',
     });
   } catch (error) {
     console.error('Word import error:', error);
-    res.status(500).json({ error: 'Failed to process Word import' });
+    return res.status(500).json({ error: 'Failed to process Word import' });
   }
 });
 
@@ -162,7 +162,7 @@ router.get('/jobs/:id', (req: Request, res: Response) => {
     return res.status(404).json({ error: 'Import job not found' });
   }
 
-  res.json({
+  return res.json({
     id: job.id,
     status: job.status,
     progress: job.progress,
