@@ -1,14 +1,29 @@
 import React from 'react';
 import './App.css';
+import { AuthProvider } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
+import ToastContainer from './components/ToastContainer';
+import { useToast } from './contexts/ToastContext';
+import AppRoutes from './routes';
+
+function AppContent() {
+  const { toasts, removeToast } = useToast();
+  
+  return (
+    <>
+      <AppRoutes />
+      <ToastContainer toasts={toasts} onClose={removeToast} />
+    </>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Requirements Management & Traceability</h1>
-        <p>Application is starting...</p>
-      </header>
-    </div>
+    <AuthProvider>
+      <ToastProvider>
+        <AppContent />
+      </ToastProvider>
+    </AuthProvider>
   );
 }
 

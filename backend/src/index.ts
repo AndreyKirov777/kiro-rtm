@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import importRoutes from './routes/importRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -27,6 +28,9 @@ app.get('/health', (_req, res) => {
 app.get('/api/v1', (_req, res) => {
   res.json({ message: 'RMT API v1', version: '1.0.0' });
 });
+
+// Import routes
+app.use('/api/v1/import', importRoutes);
 
 // Error handling middleware
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
