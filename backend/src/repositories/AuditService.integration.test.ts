@@ -42,12 +42,13 @@ describe('AuditService - Automatic Trigger Integration Tests', () => {
       await pool.query(`DELETE FROM users WHERE id = $1`, [userId]);
     }
 
-    // Create test user
+    // Create test user with unique email
+    const uniqueEmail = `trigger-integration-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('trigger-integration@example.com', 'Trigger Integration User', 'author')
+      VALUES ($1, 'Trigger Integration User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create test project
@@ -68,6 +69,7 @@ describe('AuditService - Automatic Trigger Integration Tests', () => {
     await pool.query('DELETE FROM requirements WHERE project_id = $1', [testProjectId]);
     await pool.query('DELETE FROM projects WHERE id = $1', [testProjectId]);
     await pool.query('DELETE FROM users WHERE id = $1', [testUserId]);
+    await pool.end();
   });
 
   afterEach(async () => {

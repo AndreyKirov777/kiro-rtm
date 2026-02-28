@@ -20,12 +20,13 @@ describe('PostgresGraphRepository - Integration Tests', () => {
     requirementRepository = new RequirementRepository(pool);
     linkRepository = new TraceabilityLinkRepository(pool);
 
-    // Create test user
+    // Create test user with unique email
+    const uniqueEmail = `graph-integration-test-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('graph-integration-test@example.com', 'Graph Integration Test User', 'author')
+      VALUES ($1, 'Graph Integration Test User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create test project

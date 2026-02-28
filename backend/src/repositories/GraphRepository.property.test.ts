@@ -29,12 +29,13 @@ describe('GraphRepository - Property-Based Tests', () => {
     requirementRepository = new RequirementRepository(pool);
     linkRepository = new TraceabilityLinkRepository(pool);
 
-    // Create a test user
+    // Create a test user with unique email
+    const uniqueEmail = `graph-test-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('graph-test@example.com', 'Graph Test User', 'author')
+      VALUES ($1, 'Graph Test User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create a test project

@@ -13,12 +13,13 @@ describe('TraceabilityLinkRepository', () => {
   beforeAll(async () => {
     repository = new TraceabilityLinkRepository(pool);
 
-    // Create a test user
+    // Create a test user with unique email
+    const uniqueEmail = `test-link-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('test-link@example.com', 'Test Link User', 'author')
+      VALUES ($1, 'Test Link User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create a test project

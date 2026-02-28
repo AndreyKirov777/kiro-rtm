@@ -10,12 +10,13 @@ describe('RequirementRepository', () => {
   beforeAll(async () => {
     repository = new RequirementRepository(pool);
 
-    // Create a test user
+    // Create a test user with unique email
+    const uniqueEmail = `test-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('test@example.com', 'Test User', 'author')
+      VALUES ($1, 'Test User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create a test project

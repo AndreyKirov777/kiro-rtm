@@ -18,5 +18,7 @@ module.exports = {
     }
   },
   moduleFileExtensions: ['ts', 'js', 'json'],
-  verbose: true
+  verbose: true,
+  testTimeout: 30000, // 30 seconds for property-based tests
+  maxWorkers: 1 // Run tests serially to avoid database conflicts
 };

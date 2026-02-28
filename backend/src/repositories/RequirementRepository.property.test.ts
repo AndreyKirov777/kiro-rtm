@@ -21,12 +21,13 @@ describe('RequirementRepository - Property-Based Tests', () => {
   beforeAll(async () => {
     repository = new RequirementRepository(pool);
 
-    // Create a test user
+    // Create a test user with unique email
+    const uniqueEmail = `property-test-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('property-test@example.com', 'Property Test User', 'author')
+      VALUES ($1, 'Property Test User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create a test project

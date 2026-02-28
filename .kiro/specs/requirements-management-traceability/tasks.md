@@ -116,8 +116,8 @@ The implementation follows a layered approach: database schema and core data mod
     - Triggers should call audit entry creation
     - _Requirements: 14.1-14.4_
 
-- [ ] 6. Implement baseline service
-  - [ ] 6.1 Create BaselineService class
+- [x] 6. Implement baseline service
+  - [x] 6.1 Create BaselineService class
     - Implement createBaseline method (snapshot all requirements to JSON)
     - Implement lockBaseline method with authorization check
     - Implement compareBaselines method with diff algorithm
@@ -130,29 +130,29 @@ The implementation follows a layered approach: database schema and core data mod
     - **Property 21: Baseline Comparison Accuracy**
     - **Validates: Requirements 16.1-16.5, 17.1-17.4**
 
-- [ ] 7. Implement workflow and approval service
-  - [ ] 7.1 Create WorkflowService class
+- [x] 7. Implement workflow and approval service
+  - [x] 7.1 Create WorkflowService class
     - Implement state transition validation
     - Implement approve, requestChanges, reject methods
     - Implement reviewer authorization checks
     - _Requirements: 19.1-19.4, 20.1-20.6_
   
-  - [ ] 7.2 Implement electronic signature capture
+  - [x] 7.2 Implement electronic signature capture
     - Create ElectronicSignatureService class
     - Implement signature creation with HMAC-SHA256 hash
     - Implement signature verification method
     - Ensure immutability of signature records
     - _Requirements: 21.1-21.5_
   
-  - [ ]* 7.3 Write property test for electronic signatures
+  - [x] 7.3 Write property test for electronic signatures
     - **Property 23: Electronic Signature Tamper Detection**
     - **Validates: Requirements 21.1-21.5**
   
-  - [ ]* 7.4 Write property test for workflow transitions
+  - [x] 7.4 Write property test for workflow transitions
     - **Property 22: Workflow State Transition Enforcement**
     - **Validates: Requirements 19.1-19.4, 20.1-20.6**
 
-- [ ] 8. Checkpoint - Ensure all core services pass tests
+- [x] 8. Checkpoint - Ensure all core services pass tests
   - Run all unit tests and property tests
   - Verify database schema is correctly created
   - Ensure all tests pass, ask the user if questions arise

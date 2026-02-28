@@ -24,12 +24,13 @@ describe('TraceabilityLinkRepository - Property-Based Tests', () => {
     linkRepository = new TraceabilityLinkRepository(pool);
     requirementRepository = new RequirementRepository(pool);
 
-    // Create a test user
+    // Create a test user with unique email
+    const uniqueEmail = `traceability-test-${Date.now()}@example.com`;
     const userResult = await pool.query(`
       INSERT INTO users (email, name, role)
-      VALUES ('traceability-test@example.com', 'Traceability Test User', 'author')
+      VALUES ($1, 'Traceability Test User', 'author')
       RETURNING id
-    `);
+    `, [uniqueEmail]);
     testUserId = userResult.rows[0].id;
 
     // Create a test project
