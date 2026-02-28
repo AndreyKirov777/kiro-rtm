@@ -48,6 +48,7 @@ export function useKeyboardShortcut(
         window.removeEventListener('keydown', handleKeyDown);
       };
     }
+    return undefined;
   }, [handleKeyDown, enabled]);
 }
 

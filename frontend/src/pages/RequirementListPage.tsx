@@ -40,13 +40,17 @@ const RequirementListPage: React.FC = () => {
   const { showSuccess, showError } = useToast();
   const navigate = useNavigate();
 
+  const itemsPerPage = 10;
+
+  const handleCreateRequirement = () => {
+    navigate('/requirements/new');
+  };
+
   // Keyboard shortcuts
   useKeyboardShortcut({ key: 'n', ctrl: true }, handleCreateRequirement);
   useKeyboardShortcut({ key: 'h', ctrl: true }, () => navigate('/'));
   useKeyboardShortcut({ key: '/', ctrl: true }, () => setShowShortcutsHelp(true));
   useKeyboardShortcut({ key: 'e', ctrl: true }, () => setShowExportModal(true));
-
-  const itemsPerPage = 10;
 
   useEffect(() => {
     loadRequirements();
@@ -85,7 +89,7 @@ const RequirementListPage: React.FC = () => {
     setFilteredRequirements(filtered);
   };
 
-  const getCurrentFilters = (filtered: Requirement[]): FilterConfig => {
+  const getCurrentFilters = (_filtered: Requirement[]): FilterConfig => {
     // This is a simplified version - in reality, FilterPanel manages its own state
     return currentFilters;
   };
@@ -103,10 +107,6 @@ const RequirementListPage: React.FC = () => {
   const handleLogout = () => {
     logout();
     navigate('/login');
-  };
-
-  const handleCreateRequirement = () => {
-    navigate('/requirements/new');
   };
 
   const handleReorder = async (updatedRequirements: Requirement[]) => {
@@ -143,13 +143,13 @@ const RequirementListPage: React.FC = () => {
       key: 'type',
       header: 'Type',
       sortable: true,
-      render: (req) => req.type.replace(/_/g, ' ').toUpperCase(),
+      render: (req: Requirement) => req.type.replace(/_/g, ' ').toUpperCase(),
     },
     {
       key: 'status',
       header: 'Status',
       sortable: true,
-      render: (req) => (
+      render: (req: Requirement) => (
         <span
           className={`px-2 py-1 rounded text-xs font-medium ${
             req.status === 'approved'
@@ -169,7 +169,7 @@ const RequirementListPage: React.FC = () => {
       key: 'priority',
       header: 'Priority',
       sortable: true,
-      render: (req) => (
+      render: (req: Requirement) => (
         <span
           className={`px-2 py-1 rounded text-xs font-medium ${
             req.priority === 'critical'

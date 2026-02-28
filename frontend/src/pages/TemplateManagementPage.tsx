@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MockApiClient from '../services/MockApiClient';
-import { Button } from '../components/Button';
-import { Modal } from '../components/Modal';
-import { Input } from '../components/Input';
-import { Select } from '../components/Select';
-import { Textarea } from '../components/Textarea';
-import { Loading } from '../components/Loading';
-import { ErrorMessage } from '../components/ErrorMessage';
+import Button from '../components/Button';
+import Modal from '../components/Modal';
+import Input from '../components/Input';
+import Select from '../components/Select';
+import Textarea from '../components/Textarea';
+import Loading from '../components/Loading';
+import ErrorMessage from '../components/ErrorMessage';
 import { RequirementType, Priority } from '../types';
 
 interface Template {
@@ -28,7 +27,6 @@ interface Template {
 }
 
 export const TemplateManagementPage: React.FC = () => {
-  const navigate = useNavigate();
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

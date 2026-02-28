@@ -8,13 +8,15 @@ interface SelectOption {
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
-  options: SelectOption[];
+  options?: SelectOption[];
+  children?: React.ReactNode;
 }
 
 const Select: React.FC<SelectProps> = ({
   label,
   error,
   options,
+  children,
   className = '',
   id,
   ...props
@@ -35,11 +37,11 @@ const Select: React.FC<SelectProps> = ({
         } ${className}`}
         {...props}
       >
-        {options.map((option) => (
+        {options != null ? options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
-        ))}
+        )) : children}
       </select>
       {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>

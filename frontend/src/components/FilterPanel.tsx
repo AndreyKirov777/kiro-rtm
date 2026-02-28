@@ -20,7 +20,7 @@ interface FilterPanelProps {
 const FilterPanel: React.FC<FilterPanelProps> = ({
   requirements,
   onFilterChange,
-  availableUsers = [],
+  availableUsers: _availableUsers = [],
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filters, setFilters] = useState<FilterConfig>({

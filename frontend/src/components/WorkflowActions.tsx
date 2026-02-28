@@ -153,7 +153,7 @@ const WorkflowActions: React.FC<WorkflowActionsProps> = ({
     }
   };
 
-  const handleSign = async (meaning: string, password: string) => {
+  const handleSign = async (meaning: string, _password: string) => {
     // In mock mode, we don't validate password
     if (pendingAction?.type === 'approve') {
       await executeApprove(meaning);

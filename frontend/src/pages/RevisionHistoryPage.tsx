@@ -76,13 +76,6 @@ const RevisionHistoryPage: React.FC = () => {
     return user ? user.name : 'Unknown User';
   };
 
-  const renderFieldValue = (value: any): string => {
-    if (value === null || value === undefined) return 'N/A';
-    if (Array.isArray(value)) return value.join(', ');
-    if (typeof value === 'object') return JSON.stringify(value, null, 2);
-    return String(value);
-  };
-
   const renderVersionCard = (versionData: RequirementVersion) => {
     const req = versionData.requirement;
     const isSelected = selectedVersion === versionData.version;

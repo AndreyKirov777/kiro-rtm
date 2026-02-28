@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Select, Loading, ErrorMessage } from '../components';
-import { getMockRequirements, getMockBaselines, getMockElectronicSignatures } from '../services/mockData';
+import { getMockRequirements, getMockBaselines } from '../services/mockData';
 import { Requirement } from '../types';
 import { useNavigate } from 'react-router-dom';
-
-interface ComplianceGap {
-  category: string;
-  requirements: Requirement[];
-  severity: 'critical' | 'high' | 'medium' | 'low';
-}
 
 const ComplianceGapReportPage: React.FC = () => {
   const navigate = useNavigate();
@@ -35,8 +29,7 @@ const ComplianceGapReportPage: React.FC = () => {
       
       const requirements = getMockRequirements();
       const baselines = getMockBaselines();
-      const signatures = getMockElectronicSignatures();
-      
+
       // Filter by project if selected
       const filteredReqs = projectFilter 
         ? requirements.filter(req => req.projectId === projectFilter)

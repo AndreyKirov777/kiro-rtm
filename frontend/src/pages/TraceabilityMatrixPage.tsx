@@ -18,7 +18,7 @@ const TraceabilityMatrixPage: React.FC = () => {
   const [matrix, setMatrix] = useState<Map<string, MatrixCell>>(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState<any>({});
+  const [matrixFilteredRequirements, setMatrixFilteredRequirements] = useState<Requirement[]>([]);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -41,6 +41,7 @@ const TraceabilityMatrixPage: React.FC = () => {
       ]);
       
       setRequirements(reqData);
+      setMatrixFilteredRequirements(reqData);
       setLinks(linkData);
       
       // Extract unique test cases from external links
@@ -141,14 +142,6 @@ const TraceabilityMatrixPage: React.FC = () => {
     navigate('/login');
   };
 
-  const filteredRequirements = requirements.filter((req) => {
-    if (filters.status && req.status !== filters.status) return false;
-    if (filters.type && req.type !== filters.type) return false;
-    if (filters.priority && req.priority !== filters.priority) return false;
-    if (filters.coverageStatus && req.coverageStatus !== filters.coverageStatus) return false;
-    return true;
-  });
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -234,7 +227,7 @@ const TraceabilityMatrixPage: React.FC = () => {
           </div>
 
           {/* Filters */}
-          <FilterPanel filters={filters} onFiltersChange={setFilters} />
+          <FilterPanel requirements={requirements} onFilterChange={setMatrixFilteredRequirements} />
         </div>
 
         {/* Matrix */}
@@ -256,7 +249,7 @@ const TraceabilityMatrixPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredRequirements.map((req) => (
+              {matrixFilteredRequirements.map((req) => (
                 <tr key={req.id} className="hover:bg-gray-50">
                   <td className="sticky left-0 z-10 bg-white px-4 py-3 border-r border-gray-200">
                     <div
@@ -318,7 +311,7 @@ const TraceabilityMatrixPage: React.FC = () => {
             </tbody>
           </table>
 
-          {filteredRequirements.length === 0 && (
+          {matrixFilteredRequirements.length === 0 && (
             <div className="text-center py-8 text-gray-500">
               No requirements match the current filters
             </div>
@@ -330,7 +323,7 @@ const TraceabilityMatrixPage: React.FC = () => {
           <div className="card">
             <div className="text-sm text-gray-600">Total Requirements</div>
             <div className="text-2xl font-bold text-gray-900 mt-1">
-              {filteredRequirements.length}
+              {matrixFilteredRequirements.length}
             </div>
           </div>
           <div className="card">
@@ -342,10 +335,10 @@ const TraceabilityMatrixPage: React.FC = () => {
           <div className="card">
             <div className="text-sm text-gray-600">Coverage</div>
             <div className="text-2xl font-bold text-green-600 mt-1">
-              {filteredRequirements.length > 0
+              {matrixFilteredRequirements.length > 0
                 ? Math.round(
-                    (filteredRequirements.filter((r) => r.coverageStatus !== 'no_test').length /
-                      filteredRequirements.length) *
+                    (matrixFilteredRequirements.filter((r) => r.coverageStatus !== 'no_test').length /
+                      matrixFilteredRequirements.length) *
                       100
                   )
                 : 0}
@@ -355,7 +348,7 @@ const TraceabilityMatrixPage: React.FC = () => {
           <div className="card">
             <div className="text-sm text-gray-600">Passed</div>
             <div className="text-2xl font-bold text-green-600 mt-1">
-              {filteredRequirements.filter((r) => r.coverageStatus === 'passed').length}
+              {matrixFilteredRequirements.filter((r) => r.coverageStatus === 'passed').length}
             </div>
           </div>
         </div>

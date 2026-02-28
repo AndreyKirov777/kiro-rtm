@@ -3,15 +3,17 @@ import Button from './Button';
 
 export interface Column<T> {
   key: string;
-  header: string;
-  render?: (row: T) => React.ReactNode;
+  header?: string;
+  label?: string;
+  /** Render cell: (row) => node or (value, row) => node. Table calls with (value, row) or (row) for 1-arg. */
+  render?: ((value: any, row: T) => React.ReactNode) | ((row: T) => React.ReactNode);
   sortable?: boolean;
 }
 
 interface TableProps<T> {
   columns: Column<T>[];
   data: T[];
-  keyExtractor: (row: T) => string;
+  keyExtractor?: (row: T) => string;
   onRowClick?: (row: T) => void;
   pagination?: {
     currentPage: number;
@@ -25,7 +27,7 @@ type SortDirection = 'asc' | 'desc' | null;
 function Table<T extends Record<string, any>>({
   columns,
   data,
-  keyExtractor,
+  keyExtractor = (row: T) => (row as { id?: string }).id ?? String(row),
   onRowClick,
   pagination,
 }: TableProps<T>) {
@@ -73,13 +75,13 @@ function Table<T extends Record<string, any>>({
                       onClick={() => handleSort(column.key)}
                       className="flex items-center gap-1 hover:text-gray-700"
                     >
-                      {column.header}
+                      {column.header ?? column.label}
                       {sortKey === column.key && (
                         <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
                       )}
                     </button>
                   ) : (
-                    column.header
+                    column.header ?? column.label
                   )}
                 </th>
               ))}
@@ -94,7 +96,11 @@ function Table<T extends Record<string, any>>({
               >
                 {columns.map((column) => (
                   <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {column.render ? column.render(row) : row[column.key]}
+                    {column.render
+  ? column.render.length >= 2
+    ? (column.render as (value: unknown, row: T) => React.ReactNode)(row[column.key], row)
+    : (column.render as (row: T) => React.ReactNode)(row)
+  : row[column.key]}
                   </td>
                 ))}
               </tr>

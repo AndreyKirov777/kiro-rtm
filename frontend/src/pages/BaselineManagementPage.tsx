@@ -216,6 +216,7 @@ const BaselineManagementPage: React.FC = () => {
 
       {showCreateModal && (
         <Modal
+          isOpen={showCreateModal}
           title="Create Baseline"
           onClose={() => {
             setShowCreateModal(false);

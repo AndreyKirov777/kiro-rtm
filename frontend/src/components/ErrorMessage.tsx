@@ -3,9 +3,10 @@ import React from 'react';
 interface ErrorMessageProps {
   message: string;
   onRetry?: () => void;
+  onDismiss?: () => void;
 }
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry, onDismiss }) => {
   return (
     <div className="rounded-md bg-red-50 p-4 border border-red-200">
       <div className="flex">
@@ -27,14 +28,24 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => {
           <div className="mt-2 text-sm text-red-700">
             <p>{message}</p>
           </div>
-          {onRetry && (
-            <div className="mt-4">
-              <button
-                onClick={onRetry}
-                className="text-sm font-medium text-red-800 hover:text-red-900 underline"
-              >
-                Try again
-              </button>
+          {(onRetry || onDismiss) && (
+            <div className="mt-4 flex gap-3">
+              {onRetry && (
+                <button
+                  onClick={onRetry}
+                  className="text-sm font-medium text-red-800 hover:text-red-900 underline"
+                >
+                  Try again
+                </button>
+              )}
+              {onDismiss && (
+                <button
+                  onClick={onDismiss}
+                  className="text-sm font-medium text-red-800 hover:text-red-900 underline"
+                >
+                  Dismiss
+                </button>
+              )}
             </div>
           )}
         </div>

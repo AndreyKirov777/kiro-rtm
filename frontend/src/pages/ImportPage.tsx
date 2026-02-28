@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '../components/Button';
-import { Select } from '../components/Select';
-import { Input } from '../components/Input';
-import { Modal } from '../components/Modal';
+import Button from '../components/Button';
+import Select from '../components/Select';
+import Input from '../components/Input';
+import Modal from '../components/Modal';
 
 type ImportFormat = 'csv' | 'reqif' | 'word';
 

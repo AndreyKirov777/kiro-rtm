@@ -105,16 +105,6 @@ const AuditTrailPage: React.FC = () => {
     return new Date(timestamp).toLocaleString();
   };
 
-  const formatValue = (value: any) => {
-    if (value === null || value === undefined) {
-      return 'N/A';
-    }
-    if (typeof value === 'object') {
-      return JSON.stringify(value, null, 2);
-    }
-    return String(value);
-  };
-
   const getActorTypeBadge = (actorType: string) => {
     const colors: Record<string, string> = {
       user: 'bg-blue-100 text-blue-800',

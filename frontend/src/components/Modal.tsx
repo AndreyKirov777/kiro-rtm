@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
-import Button from './Button';
 
 interface ModalProps {
   isOpen: boolean;

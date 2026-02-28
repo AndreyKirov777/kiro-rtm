@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Modal } from './Modal';
-import { Button } from './Button';
-import { Select } from './Select';
+import Modal from './Modal';
+import Button from './Button';
+import Select from './Select';
 
 type ExportFormat = 'csv' | 'json' | 'pdf' | 'reqif';
 
@@ -30,7 +30,6 @@ const AVAILABLE_FIELDS = [
 export const ExportModal: React.FC<ExportModalProps> = ({
   isOpen,
   onClose,
-  projectId,
 }) => {
   const [format, setFormat] = useState<ExportFormat>('csv');
   const [selectedFields, setSelectedFields] = useState<string[]>(
@@ -192,7 +191,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </label>
           <Select
             value={format}
-            onChange={(e) => setFormat(e.target.value as ExportFormat)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormat(e.target.value as ExportFormat)}
             disabled={isExporting}
           >
             <option value="csv">CSV (Comma-Separated Values)</option>
